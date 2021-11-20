@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:tokofy/rest/customerREST.dart';
 import 'package:tokofy/customer/orders.dart';
 import 'package:tokofy/customer/search.dart';
 import 'package:tokofy/customer/settings.dart';
@@ -19,6 +20,7 @@ class _CustomerDashboardState extends State<CustomerDashboard> {
     CustomerOrders(),
     CustomerSetting()
   ];
+
   void onItemTapped(int index) {
     setState(() {
       barSelected = index;
@@ -65,12 +67,26 @@ class _CustomerDashboardState extends State<CustomerDashboard> {
 
 class DashboardWidget extends StatefulWidget {
   const DashboardWidget({Key key}) : super(key: key);
-
   @override
   _DashboardWidgetState createState() => _DashboardWidgetState();
 }
 
 class _DashboardWidgetState extends State<DashboardWidget> {
+  var tokos = [];
+
+  void initToko() async {
+    var bro = await getAllTokos();
+    setState(() {
+      tokos = bro;
+    });
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    initToko();
+  }
+
   var selected = -1;
   @override
   Widget build(BuildContext context) {
@@ -96,8 +112,9 @@ class _DashboardWidgetState extends State<DashboardWidget> {
             ),
             Flexible(
                 child: ListView.builder(
-                    itemCount: 2,
+                    itemCount: tokos.length,
                     itemBuilder: (BuildContext context, int index) {
+                      print(tokos.length);
                       return Card(
                           shape: RoundedRectangleBorder(
                               borderRadius: BorderRadius.circular(10)),
@@ -129,19 +146,40 @@ class _DashboardWidgetState extends State<DashboardWidget> {
                                           SizedBox(
                                             height: 10,
                                           ),
-                                          Text("local toko",
+                                          Text(tokos[index].name,
                                               style: TextStyle(
                                                   fontWeight: FontWeight.w800,
                                                   color: Color(0xffF8DB90),
                                                   fontSize: 24)),
                                           Row(
                                             children: [
-                                              Text("data"),
-                                              Text("data"),
-                                              Text("data"),
-                                              Text("data")
+                                              Padding(
+                                                padding:
+                                                    const EdgeInsets.symmetric(
+                                                        vertical: 8),
+                                                child:
+                                                    Text(tokos[index].location),
+                                              ),
+                                              Padding(
+                                                padding:
+                                                    const EdgeInsets.all(12.0),
+                                                child: Container(
+                                                  height: 10,
+                                                  width: 10,
+                                                  decoration: BoxDecoration(
+                                                    color: Color(0xff5F5F5F),
+                                                    shape: BoxShape.circle,
+                                                  ),
+                                                ),
+                                              ),
+                                              Padding(
+                                                padding:
+                                                    const EdgeInsets.all(8.0),
+                                                child:
+                                                    Text(tokos[index].category),
+                                              ),
                                             ],
-                                          )
+                                          ),
                                         ],
                                       ),
                                     ),
@@ -176,7 +214,7 @@ class _DashboardWidgetState extends State<DashboardWidget> {
                                               height: 10,
                                             ),
                                             Text(
-                                              "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
+                                              tokos[index].desc,
                                               style: TextStyle(
                                                   fontWeight: FontWeight.w800),
                                             ),
@@ -196,8 +234,10 @@ class _DashboardWidgetState extends State<DashboardWidget> {
                                                       context,
                                                       MaterialPageRoute(
                                                           builder: (context) =>
-                                                              ShopDetails(
-                                                                  "broooo")));
+                                                              ShopDetails(tokos[
+                                                                      index]
+                                                                  .userId
+                                                                  .toString())));
                                                 },
                                                 child: Padding(
                                                   padding: const EdgeInsets.all(

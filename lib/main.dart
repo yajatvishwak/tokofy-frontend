@@ -14,7 +14,7 @@ class App extends StatelessWidget {
         brightness: Brightness.dark,
       ),
       onGenerateRoute: router.generateRoute,
-      initialRoute: "retailer/dashboard",
+      initialRoute: "/",
     );
   }
 }

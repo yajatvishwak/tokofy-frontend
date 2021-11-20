@@ -7,6 +7,7 @@ import 'package:tokofy/customer/signup.dart';
 import 'package:tokofy/retailer/dashboard.dart';
 import 'package:tokofy/retailer/login.dart';
 import 'package:tokofy/retailer/saleforecast.dart';
+import 'package:tokofy/retailer/signup.dart';
 
 Route<dynamic> generateRoute(RouteSettings settings) {
   switch (settings.name) {
@@ -30,6 +31,9 @@ Route<dynamic> generateRoute(RouteSettings settings) {
       break;
     case "retailer/login":
       return MaterialPageRoute(builder: (context) => RetailerLogin());
+      break;
+    case "retailer/signup":
+      return MaterialPageRoute(builder: (context) => RetailerSignup());
       break;
     case "retailer/saleforecast":
       return MaterialPageRoute(builder: (context) => RetailerSaleForecast());

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
-class CustomerSignup extends StatelessWidget {
-  const CustomerSignup({Key key}) : super(key: key);
+class RetailerSignup extends StatelessWidget {
+  const RetailerSignup({Key key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -35,9 +35,9 @@ class CustomerSignup extends StatelessWidget {
                                 color: Color(0xffF8DB90).withOpacity(0.5)),
                           ),
                         ),
-                        Text("signup",
+                        Text("signup retailer",
                             style: TextStyle(
-                                fontSize: 64,
+                                fontSize: 36,
                                 fontWeight: FontWeight.w800,
                                 color: Colors.white54)),
                         Padding(
@@ -54,6 +54,78 @@ class CustomerSignup extends StatelessWidget {
                                   filled: true,
                                   contentPadding: EdgeInsets.all(20),
                                   hintText: "username",
+                                  fillColor: Color(0xff5F5F5F)),
+                            ),
+                          ),
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: ClipRRect(
+                            borderRadius: BorderRadius.circular(8.0),
+                            child: TextField(
+                              decoration: InputDecoration(
+                                  border: InputBorder.none,
+                                  focusedBorder: InputBorder.none,
+                                  enabledBorder: InputBorder.none,
+                                  errorBorder: InputBorder.none,
+                                  disabledBorder: InputBorder.none,
+                                  filled: true,
+                                  contentPadding: EdgeInsets.all(20),
+                                  hintText: "name",
+                                  fillColor: Color(0xff5F5F5F)),
+                            ),
+                          ),
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: ClipRRect(
+                            borderRadius: BorderRadius.circular(8.0),
+                            child: TextField(
+                              decoration: InputDecoration(
+                                  border: InputBorder.none,
+                                  focusedBorder: InputBorder.none,
+                                  enabledBorder: InputBorder.none,
+                                  errorBorder: InputBorder.none,
+                                  disabledBorder: InputBorder.none,
+                                  filled: true,
+                                  contentPadding: EdgeInsets.all(20),
+                                  hintText: "description",
+                                  fillColor: Color(0xff5F5F5F)),
+                            ),
+                          ),
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: ClipRRect(
+                            borderRadius: BorderRadius.circular(8.0),
+                            child: TextField(
+                              decoration: InputDecoration(
+                                  border: InputBorder.none,
+                                  focusedBorder: InputBorder.none,
+                                  enabledBorder: InputBorder.none,
+                                  errorBorder: InputBorder.none,
+                                  disabledBorder: InputBorder.none,
+                                  filled: true,
+                                  contentPadding: EdgeInsets.all(20),
+                                  hintText: "category",
+                                  fillColor: Color(0xff5F5F5F)),
+                            ),
+                          ),
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: ClipRRect(
+                            borderRadius: BorderRadius.circular(8.0),
+                            child: TextField(
+                              decoration: InputDecoration(
+                                  border: InputBorder.none,
+                                  focusedBorder: InputBorder.none,
+                                  enabledBorder: InputBorder.none,
+                                  errorBorder: InputBorder.none,
+                                  disabledBorder: InputBorder.none,
+                                  filled: true,
+                                  contentPadding: EdgeInsets.all(20),
+                                  hintText: "location",
                                   fillColor: Color(0xff5F5F5F)),
                             ),
                           ),
