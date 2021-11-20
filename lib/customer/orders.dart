@@ -131,8 +131,15 @@ class OrderCard extends StatelessWidget {
                     style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
                   ),
                   Text(
-                    date,
-                    style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+                    DateTime.parse(date).day.toString() +
+                        "/" +
+                        DateTime.parse(date).month.toString() +
+                        "/" +
+                        DateTime.parse(date).year.toString(),
+                    style: TextStyle(
+                        fontSize: 18,
+                        color: Colors.white38,
+                        fontWeight: FontWeight.bold),
                   ),
                   SizedBox(
                     height: 10,
