@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:tokofy/rest/customerREST.dart';
 
 class RetailerLogin extends StatefulWidget {
@@ -11,6 +12,12 @@ class RetailerLogin extends StatefulWidget {
 class _RetailerLoginState extends State<RetailerLogin> {
   TextEditingController usernameController = new TextEditingController();
   TextEditingController passwordController = new TextEditingController();
+  void store(id) async {
+    final prefs = await SharedPreferences.getInstance();
+    prefs.setInt('user_id', id);
+    print(prefs.getInt('user_id'));
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -95,10 +102,13 @@ class _RetailerLoginState extends State<RetailerLogin> {
                                     Colors.black.withOpacity(0.5), // foreground
                               ),
                               onPressed: () async {
-                                if (await customerLogin(usernameController.text,
-                                    passwordController.text)) {
+                                var userId = await customerLogin(
+                                    usernameController.text,
+                                    passwordController.text);
+                                if (userId != null) {
                                   Navigator.of(context).pushNamedAndRemoveUntil(
                                       "retailer/dashboard", (route) => false);
+                                  store(userId);
                                 } else {
                                   showDialog(
                                       context: context,

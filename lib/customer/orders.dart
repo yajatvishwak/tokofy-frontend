@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+import 'package:tokofy/models/orderModel.dart';
+import 'package:tokofy/rest/customerREST.dart';
 
 class CustomerOrders extends StatefulWidget {
   const CustomerOrders({Key key}) : super(key: key);
@@ -9,6 +12,23 @@ class CustomerOrders extends StatefulWidget {
 }
 
 class _CustomerOrdersState extends State<CustomerOrders> {
+  List<OrderModel> l;
+  void resolver() async {
+    final prefs = await SharedPreferences.getInstance();
+
+    var l1 = await getAllOrders(prefs.getInt("user_id"));
+    setState(() {
+      l = l1;
+    });
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    resolver();
+    print(l);
+  }
+
   @override
   Widget build(BuildContext context) {
     return SingleChildScrollView(
@@ -32,9 +52,11 @@ class _CustomerOrdersState extends State<CustomerOrders> {
               SizedBox(
                 height: 30,
               ),
-              OrderCard("accepted"),
-              OrderCard("rejected"),
-              OrderCard("pending"),
+              Column(
+                  children: l
+                      .map((e) => OrderCard(e.status.toLowerCase(), e.createdAt,
+                          e.id.toString(), e.item.name))
+                      .toList())
             ],
           ),
         ),
@@ -44,9 +66,15 @@ class _CustomerOrdersState extends State<CustomerOrders> {
 }
 
 class OrderCard extends StatelessWidget {
+  final String id;
+  final String name;
+  final String date;
   final String status;
   const OrderCard(
-    this.status, {
+    this.status,
+    this.date,
+    this.id,
+    this.name, {
     Key key,
   }) : super(key: key);
 
@@ -97,13 +125,13 @@ class OrderCard extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.end,
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text("Order id"),
+                  Text(id),
                   Text(
-                    "order name",
+                    name,
                     style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
                   ),
                   Text(
-                    "date",
+                    date,
                     style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
                   ),
                   SizedBox(

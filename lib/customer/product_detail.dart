@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:slide_to_confirm/slide_to_confirm.dart';
+import 'package:tokofy/models/itemModel.dart';
+import 'package:tokofy/rest/customerREST.dart';
 
 class ProductDetail extends StatefulWidget {
   final String prodID;
@@ -11,6 +14,20 @@ class ProductDetail extends StatefulWidget {
 }
 
 class _ProductDetailState extends State<ProductDetail> {
+  ItemModel i;
+  void resolveItem() async {
+    var x = await getItem(widget.prodID);
+    setState(() {
+      i = x;
+    });
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    resolveItem();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -52,7 +69,7 @@ class _ProductDetailState extends State<ProductDetail> {
                   height: 30,
                 ),
                 Text(
-                  "tokofy",
+                  i.item.name,
                   style: TextStyle(
                     fontSize: 36,
                     fontWeight: FontWeight.w800,
@@ -60,14 +77,14 @@ class _ProductDetailState extends State<ProductDetail> {
                   ),
                 ),
                 Text(
-                  "tokofy",
+                  i.item.price.toString() + " rs",
                   style: TextStyle(fontSize: 24, fontWeight: FontWeight.w800),
                 ),
                 SizedBox(
                   height: 20,
                 ),
                 Text(
-                  "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
+                  i.item.desc,
                   style: TextStyle(fontSize: 18),
                 ),
                 SizedBox(
@@ -83,7 +100,11 @@ class _ProductDetailState extends State<ProductDetail> {
                           color: Color(0xffF8DB90),
                           fontWeight: FontWeight.bold),
                       width: MediaQuery.of(context).size.width - 100,
-                      onConfirmation: () {
+                      onConfirmation: () async {
+                        final prefs = await SharedPreferences.getInstance();
+
+                        confirmOrder(prefs.get("user_id").toString(),
+                            i.item.id.toString(), i.item.userId.toString());
                         showDialog(
                             context: context,
                             builder: (context) {
