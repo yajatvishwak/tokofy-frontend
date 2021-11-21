@@ -22,17 +22,10 @@ class Item {
   int quantity;
   String desc;
   int price;
-  Null image;
+  String image;
   int userId;
 
-  Item(
-      {this.id,
-      this.name,
-      this.quantity,
-      this.desc,
-      this.price,
-      this.image,
-      this.userId});
+  Item({this.id, this.name, this.quantity, this.desc, this.price, this.userId});
 
   Item.fromJson(Map<String, dynamic> json) {
     id = json['id'];
@@ -40,7 +33,6 @@ class Item {
     quantity = json['quantity'];
     desc = json['desc'];
     price = json['price'];
-    image = json['image'];
     userId = json['user_id'];
   }
 
@@ -51,7 +43,7 @@ class Item {
     data['quantity'] = this.quantity;
     data['desc'] = this.desc;
     data['price'] = this.price;
-    data['image'] = this.image;
+
     data['user_id'] = this.userId;
     return data;
   }

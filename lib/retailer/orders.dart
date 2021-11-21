@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+import 'package:tokofy/models/reatilerOrder.dart';
+import 'package:tokofy/rest/retailerREST.dart';
 
 class RetailerOrders extends StatefulWidget {
   const RetailerOrders({Key key}) : super(key: key);
@@ -9,6 +12,22 @@ class RetailerOrders extends StatefulWidget {
 }
 
 class _RetailerOrdersState extends State<RetailerOrders> {
+  List<RetailerOrder> l;
+  void resolver() async {
+    final pref = await SharedPreferences.getInstance();
+    var bro = await getAllOrdersRetailer(pref.getInt("user_id").toString());
+    setState(() {
+      l = bro;
+    });
+    print(l);
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    resolver();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -34,9 +53,20 @@ class _RetailerOrdersState extends State<RetailerOrders> {
                 SizedBox(
                   height: 30,
                 ),
-                OrderCard("pending"),
-                OrderCard("accepted"),
-                OrderCard("rejected")
+                Column(
+                  children: l
+                      .map((e) => OrderCard(
+                          e.status.toLowerCase(),
+                          DateTime.parse(e.createdAt).day.toString() +
+                              "/" +
+                              DateTime.parse(e.createdAt).month.toString() +
+                              "/" +
+                              DateTime.parse(e.createdAt).year.toString(),
+                          e.item.name,
+                          e.id.toString(),
+                          e.user.name))
+                      .toList(),
+                )
               ],
             ),
           ),
@@ -48,8 +78,16 @@ class _RetailerOrdersState extends State<RetailerOrders> {
 
 class OrderCard extends StatelessWidget {
   final String status;
+  final String orderid;
+  final String itemname;
+  final String date;
+  final String user;
   const OrderCard(
-    this.status, {
+    this.status,
+    this.date,
+    this.itemname,
+    this.orderid,
+    this.user, {
     Key key,
   }) : super(key: key);
 
@@ -64,6 +102,12 @@ class OrderCard extends StatelessWidget {
                 SlidableAction(
                   onPressed: (BuildContext context) {
                     print("hawye");
+                    rejectedStatus(orderid);
+                    return AlertDialog(
+                      shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(15)),
+                      title: Text("order rejected"),
+                    );
                   },
                   backgroundColor: Color(0xFFFE4A49),
                   foregroundColor: Colors.white,
@@ -77,7 +121,13 @@ class OrderCard extends StatelessWidget {
               children: [
                 SlidableAction(
                   onPressed: (BuildContext context) {
-                    print("hello");
+                    acceptStatus(orderid);
+                    return AlertDialog(
+                      shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(15)),
+                      title: Text("Accepted"),
+                      content: Image.network("https://i.imgur.com/9LFgGnd.gif"),
+                    );
                   },
                   backgroundColor: Color(0xFF7BC043),
                   foregroundColor: Colors.white,
@@ -132,14 +182,14 @@ class OrderCard extends StatelessWidget {
                         mainAxisAlignment: MainAxisAlignment.end,
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          Text("Order id"),
+                          Text("order " + orderid),
                           Text(
-                            "order name",
+                            itemname,
                             style: TextStyle(
                                 fontSize: 24, fontWeight: FontWeight.bold),
                           ),
                           Text(
-                            "date",
+                            date,
                             style: TextStyle(
                                 fontSize: 18, fontWeight: FontWeight.bold),
                           ),
@@ -185,7 +235,7 @@ class OrderCard extends StatelessWidget {
                               Padding(
                                 padding: const EdgeInsets.all(8.0),
                                 child: Text(
-                                  "yajat vishwakarma  ",
+                                  user,
                                   style: TextStyle(fontSize: 18),
                                 ),
                               )
@@ -248,9 +298,9 @@ class OrderCard extends StatelessWidget {
                       mainAxisAlignment: MainAxisAlignment.end,
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Text("Order id"),
+                        Text("order " + orderid),
                         Text(
-                          "order name",
+                          itemname,
                           style: TextStyle(
                               fontSize: 24, fontWeight: FontWeight.bold),
                         ),
@@ -301,7 +351,7 @@ class OrderCard extends StatelessWidget {
                             Padding(
                               padding: const EdgeInsets.all(8.0),
                               child: Text(
-                                "yajat vishwakarma  ",
+                                user,
                                 style: TextStyle(fontSize: 18),
                               ),
                             )

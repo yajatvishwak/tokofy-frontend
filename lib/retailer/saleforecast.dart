@@ -10,7 +10,21 @@ class RetailerSaleForecast extends StatefulWidget {
 
 class _RetailerSaleForecastState extends State<RetailerSaleForecast> {
   var chosenValue = "jan";
-  var classes = ["jan", "feb"];
+  List<List<int>> values = [
+    [4234, 6633, 6673, 2367, 2356, 3246],
+    [7456, 4456, 2378, 8673, 2346, 8456],
+    [8678, 4564, 7453, 8357, 3467, 4563],
+    [4234, 6633, 6673, 2367, 2356, 3246],
+    [7456, 4456, 2378, 8673, 2346, 8456],
+    [8678, 4564, 7453, 8357, 3467, 4563],
+    [4234, 6633, 6673, 2367, 2356, 3246],
+    [7456, 4456, 2378, 8673, 2346, 8456],
+    [8678, 4564, 7453, 8357, 3467, 4563],
+    [3123, 2342, 2457, 8643, 8656, 8864],
+    [7456, 4456, 2378, 8673, 2346, 8456],
+    [8678, 4564, 7453, 8357, 3467, 4563],
+  ];
+  var chosenData = [];
 
   @override
   Widget build(BuildContext context) {
@@ -61,7 +75,23 @@ class _RetailerSaleForecastState extends State<RetailerSaleForecast> {
                   }).toList(),
                   onChanged: (value) {
                     setState(() {
+                      var months = [
+                        "jan",
+                        "feb",
+                        "mar",
+                        "apr",
+                        "may",
+                        "jun",
+                        "jul",
+                        "aug",
+                        "sep",
+                        "oct",
+                        "nov",
+                        "dec"
+                      ];
                       chosenValue = value;
+                      chosenData = values[months.indexOf(value)];
+                      print(chosenData);
                     });
                   },
                 ),
@@ -80,7 +110,7 @@ class _RetailerSaleForecastState extends State<RetailerSaleForecast> {
                             displayMode: SparkChartMarkerDisplayMode.all),
                         trackball: SparkChartTrackball(
                             activationMode: SparkChartActivationMode.tap),
-                        data: [1, 2, 4, 4, 1, 4, 5, 6, 1, 4, 6],
+                        data: List<num>.from(chosenData),
                       )),
                 ),
                 SizedBox(
@@ -108,8 +138,20 @@ class _RetailerSaleForecastState extends State<RetailerSaleForecast> {
                       ],
                       rows: [
                         DataRow(cells: [
-                          DataCell(Text("item name blaadf asf sdf ")),
-                          DataCell(Text("broooo"))
+                          DataCell(Text("Croissant")),
+                          DataCell(Text("7804"))
+                        ]),
+                        DataRow(cells: [
+                          DataCell(Text("Bread")),
+                          DataCell(Text("4554"))
+                        ]),
+                        DataRow(cells: [
+                          DataCell(Text("Garlic Bread")),
+                          DataCell(Text("3221"))
+                        ]),
+                        DataRow(cells: [
+                          DataCell(Text("Veg puff")),
+                          DataCell(Text("1885"))
                         ])
                       ],
                     ),
@@ -137,8 +179,20 @@ class _RetailerSaleForecastState extends State<RetailerSaleForecast> {
                       ],
                       rows: [
                         DataRow(cells: [
-                          DataCell(Text("item name blaadf asf sdf ")),
-                          DataCell(Text("broooo"))
+                          DataCell(Text("Croissant")),
+                          DataCell(Text("7851"))
+                        ]),
+                        DataRow(cells: [
+                          DataCell(Text("Bread")),
+                          DataCell(Text("5025"))
+                        ]),
+                        DataRow(cells: [
+                          DataCell(Text("Garlic Bread")),
+                          DataCell(Text("3102"))
+                        ]),
+                        DataRow(cells: [
+                          DataCell(Text("Veg puff")),
+                          DataCell(Text("1896"))
                         ])
                       ],
                     ),

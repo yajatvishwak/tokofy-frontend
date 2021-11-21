@@ -82,7 +82,7 @@ class Items {
   int quantity;
   String desc;
   int price;
-  Null image;
+  String image;
   int userId;
 
   Items(

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:syncfusion_flutter_charts/sparkcharts.dart';
 import 'package:tokofy/retailer/catalog.dart';
 import 'package:tokofy/retailer/orders.dart';
+import 'package:tokofy/retailer/settings.dart';
 
 class RetailerDashboard extends StatefulWidget {
   const RetailerDashboard({Key key}) : super(key: key);
@@ -12,7 +13,12 @@ class RetailerDashboard extends StatefulWidget {
 
 class _RetailerDashboardState extends State<RetailerDashboard> {
   int selectedIndex = 0;
-  var pageSelector = [DashboardWidget(), RetailerOrders(), RetailerCatalog()];
+  var pageSelector = [
+    DashboardWidget(),
+    RetailerOrders(),
+    RetailerCatalog(),
+    RetailerSettings()
+  ];
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -84,7 +90,7 @@ class _DashboardWidgetState extends State<DashboardWidget> {
                 height: 30,
               ),
               Text(
-                "hello seller,",
+                "hello, seller",
                 style: TextStyle(
                     fontSize: 24,
                     color: Color(0xffF8DB90).withOpacity(0.5),
@@ -136,7 +142,16 @@ class _DashboardWidgetState extends State<DashboardWidget> {
                                   displayMode: SparkChartMarkerDisplayMode.all),
                               trackball: SparkChartTrackball(
                                   activationMode: SparkChartActivationMode.tap),
-                              data: [1, 2, 4, 4, 1, 4, 5, 6, 1, 4, 6],
+                              data: [
+                                3123,
+                                2342,
+                                2457,
+                                8643,
+                                8656,
+                                8864,
+                                9643,
+                                7788
+                              ],
                             )),
                       ),
                     ],
